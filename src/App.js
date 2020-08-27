@@ -11,17 +11,26 @@ import { ores } from './stores/ores';
 function App() {
   return (
     <Router>
-      <Link to="/">Home</Link>
-      <Link to="/ores">Ores</Link>
+      <nav className="bg-gray-300">
+        <div className="container mx-auto flex justify-between items-center px-2">
+          <h1 className="color-gray-800 text-2xl px-2 py-2">Eve Echoes Utilities</h1>
+          <div>
+            <Link className="px-2 py-2 hover:bg-gray-400" to="/">Home</Link>
+            <Link className="px-2 py-2 hover:bg-gray-400" to="/ores">Ores</Link>
+          </div>
+        </div>
+      </nav>
 
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/ores">
-          <Ores />
-        </Route>
-      </Switch>
+      <section className="container mx-auto p-4">
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/ores">
+            <Ores />
+          </Route>
+        </Switch>
+      </section>
     </Router>
   );
 }
@@ -29,7 +38,9 @@ function App() {
 function Home() {
   return (
     <div>
-      <h2>Home</h2>
+      <p className="pb-4">This is a set of tools that I have put together to help me progress through the Eve Echoes universe. I am sharing them here to help anyone else who might find them valuable.</p>
+
+      <p className="pb-4">If you would like to contribute to this set of tools, you can do so here: <a className="text-blue-700 underline" target="blank" rel="noreferer noopener" href="https://github.com/pstephan1187/eve-echoes-tools">Github</a></p>
     </div>
   );
 }
@@ -37,7 +48,8 @@ function Home() {
 function Ores() {
   return (
     <div>
-      <h2>Ores</h2>
+      <h2 className="text-4xl pb-4">Ores</h2>
+
       <table className="w-full">
         <thead>
           <tr>
