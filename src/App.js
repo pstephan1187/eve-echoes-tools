@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 
-import { ores } from './stores/ores';
+import { ores, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_RARE, ORE_TYPE_VERY_RARE } from './stores/ores';
 
 function App() {
   return (
@@ -38,17 +38,70 @@ function App() {
 function Home() {
   return (
     <div>
-      <p className="pb-4">This is a set of tools that I have put together to help me progress through the Eve Echoes universe. I am sharing them here to help anyone else who might find them valuable.</p>
+      <p className="mb-4">This is a set of tools that I have put together to help me progress through the Eve Echoes universe. I am sharing them here to help anyone else who might find them valuable. Current tools available:</p>
 
-      <p className="pb-4">If you would like to contribute to this set of tools, you can do so here: <a className="text-blue-700 underline" target="blank" rel="noreferer noopener" href="https://github.com/pstephan1187/eve-echoes-tools">Github</a></p>
+      <ul className="mb-4 ml-4 list-disc">
+        <li><Link className="font-bold text-blue-700 underline hover:text-blue-800" to="/ores">Ore Value by volume calculations</Link> to help determine which ore will produce the most value <strong>per haul</strong> if you sell the ore directly on the market</li>
+      </ul>
+
+      <p className="mb-4">If you would like to contribute to this set of tools, you can do so here: <a className="text-blue-700 underline" target="blank" rel="noreferer noopener" href="https://github.com/pstephan1187/eve-echoes-tools">Github</a></p>
     </div>
   );
 }
 
 function Ores() {
+  const orgOres = JSON.parse(JSON.stringify(ores));
+  const [userOres, setUserOres] = useState(orgOres);
+  const lastUpdatedDateTime = [ 2020, 8, 27, 11, 30];
+  const lastUpdated = new Date();
+
+  lastUpdated.setUTCFullYear(lastUpdatedDateTime[0]);
+  lastUpdated.setUTCMonth(lastUpdatedDateTime[1] - 1);
+  lastUpdated.setUTCDate(lastUpdatedDateTime[2]);
+  lastUpdated.setUTCHours(lastUpdatedDateTime[3] + (lastUpdated.getTimezoneOffset() / 60));
+  lastUpdated.setUTCMinutes(lastUpdatedDateTime[4]);
+  lastUpdated.setUTCSeconds(0);
+
+  const setOreValue = (oreName, newValue) => {
+    const newOreValues = JSON.parse(JSON.stringify(userOres))
+
+    for (const i in newOreValues) {
+      if (newOreValues[i].label === oreName) {
+        newOreValues[i].value = newValue;
+      }
+    }
+
+    setUserOres(newOreValues);
+  }
+
+  const resetOreValue = (oreName, newValue) => {
+    const newOreValues = JSON.parse(JSON.stringify(userOres))
+
+    if (newValue === null || newValue === '') {
+      for (const i in ores) {
+        if (ores[i].label === oreName) {
+          console.log(newValue, ores[i].value);
+          newValue = ores[i].value;
+        }
+      }
+
+      for (const i in newOreValues) {
+        if (newOreValues[i].label === oreName) {
+          newOreValues[i].value = newValue;
+        }
+      }
+    }
+
+    setUserOres(newOreValues);
+  }
+
   return (
     <div>
-      <h2 className="text-4xl pb-4">Ores</h2>
+      <h2 className="text-4xl mb-4">Ores</h2>
+
+      <p className="mb-4">The values of the ores are not updated automatically. I will update them periodically based on approximate market rates of Jita and/or Alikara and additional ITCs. Due to the daily variance of the market, you can set your own values if you'd like.</p>
+
+      <p className="mb-4 p-2 bg-gray-300 font-bold">Values last updated {lastUpdated.toLocaleDateString()} {lastUpdated.toLocaleTimeString()}.</p>
 
       <table className="w-full">
         <thead>
@@ -62,14 +115,17 @@ function Ores() {
           </tr>
         </thead>
         <tbody>
-          {ores.map(ore => (
-            <tr>
-              <td className="text-left">{ore.label}</td>
-              <td className="text-left">{ore.type}</td>
-              <td className="text-right">[{ore.minSec}] - [{ore.maxSec}] Security Systems</td>
-              <td className="text-right">{ore.volume}m<sup>3</sup></td>
-              <td className="text-right">{ore.value}isk</td>
-              <td className="text-right">{Math.round(1000 / ore.volume * ore.value).toLocaleString()}isk</td>
+          {userOres.map(ore => (
+            <tr className={{ [ORE_TYPE_COMMON]: 'bg-green-200', [ORE_TYPE_UNCOMMON]: 'bg-yellow-200', [ORE_TYPE_RARE]: 'bg-orange-200', [ORE_TYPE_VERY_RARE]: 'bg-red-200' }[ore.type] }>
+              <td className="p-1 text-left">{ore.label}</td>
+              <td className="p-1 text-left">{ore.type}</td>
+              <td className="p-1 text-right">[{ore.minSec}] - [{ore.maxSec}] Security Systems</td>
+              <td className="p-1 text-right">{ore.volume}m<sup>3</sup></td>
+              <td className="p-1 text-right">
+                <input className="w-20 bg-white px-2 text-right" type="number" value={ore.value} onChange={e =>  setOreValue(ore.label, e.target.value) } onBlur={e => resetOreValue(ore.label, e.target.value)}/>
+                isk
+              </td>
+              <td className="p-1 text-right">{Math.round(1000 / ore.volume * ore.value).toLocaleString()}isk</td>
             </tr>
           ))}
         </tbody>
