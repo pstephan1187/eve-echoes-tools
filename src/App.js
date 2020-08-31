@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 
-import { ores, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_RARE, ORE_TYPE_VERY_RARE } from './stores/ores';
+import { ores, lastUpdateTimestamp, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_RARE, ORE_TYPE_VERY_RARE } from './stores/ores';
 
 function App() {
   return (
@@ -52,14 +52,13 @@ function Home() {
 function Ores() {
   const orgOres = JSON.parse(JSON.stringify(ores));
   const [userOres, setUserOres] = useState(orgOres);
-  const lastUpdatedDateTime = [ 2020, 8, 27, 11, 30];
   const lastUpdated = new Date();
 
-  lastUpdated.setUTCFullYear(lastUpdatedDateTime[0]);
-  lastUpdated.setUTCMonth(lastUpdatedDateTime[1] - 1);
-  lastUpdated.setUTCDate(lastUpdatedDateTime[2]);
-  lastUpdated.setUTCHours(lastUpdatedDateTime[3] + (lastUpdated.getTimezoneOffset() / 60));
-  lastUpdated.setUTCMinutes(lastUpdatedDateTime[4]);
+  lastUpdated.setUTCFullYear(lastUpdateTimestamp[0]);
+  lastUpdated.setUTCMonth(lastUpdateTimestamp[1] - 1);
+  lastUpdated.setUTCDate(lastUpdateTimestamp[2]);
+  lastUpdated.setUTCHours(lastUpdateTimestamp[3] + (lastUpdated.getTimezoneOffset() / 60));
+  lastUpdated.setUTCMinutes(lastUpdateTimestamp[4]);
   lastUpdated.setUTCSeconds(0);
 
   const setOreValue = (oreName, newValue) => {
