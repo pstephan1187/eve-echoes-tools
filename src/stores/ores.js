@@ -8,7 +8,7 @@ export const lastUpdateTimestamp = [2020, 8, 31, 8, 3];
 export const ores = [
   { label: "Veldspar", type: ORE_TYPE_COMMON, minSec: '-1.0', maxSec: '1.0', volume: 0.1, value: 5 },
   { label: "Scordite", type: ORE_TYPE_COMMON, minSec: '-1.0', maxSec: '1.0', volume: 0.15, value: 10 },
-  { label: "Plagiocase", type: ORE_TYPE_COMMON, minSec: '0.3', maxSec: '0.8', volume: 0.35, value: 20 },
+  { label: "Plagioclase", type: ORE_TYPE_COMMON, minSec: '0.3', maxSec: '0.8', volume: 0.35, value: 20 },
   { label: "Omber", type: ORE_TYPE_COMMON, minSec: '0.3', maxSec: '0.6', volume: 0.6, value: 42 },
   { label: "Kernite", type: ORE_TYPE_COMMON, minSec: '0.1', maxSec: '0.6', volume: 1.2, value: 97 },
 
