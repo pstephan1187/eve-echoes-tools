@@ -152,7 +152,7 @@ function Ores() {
                 <td className="p-1 text-right">{ volumeValue.toLocaleString() }isk</td>
                 <td className="p-1 text-right">
                   <div className="relative group cursor-pointer">
-                    {reprocessedValue.toLocaleString()}isk
+                    {reprocessedValue.toLocaleString()}isk<sup><i class="fas fa-question-circle"></i></sup>
                     <div className="hidden absolute group-hover:block bg-white p-4 rounded shadow right-0 z-10">{reprocessResult.map(mineralUnits => (
                       <div key={mineralUnits.mineral.label} className="flex justify-between">
                         <span className="mr-4">{mineralUnits.mineral.label}:</span>
