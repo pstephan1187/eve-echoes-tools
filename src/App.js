@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { createBrowserHistory } from 'history';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
   Link
@@ -9,9 +10,18 @@ import {
 import { ores, lastUpdateTimestamp, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_RARE, ORE_TYPE_VERY_RARE } from './stores/ores';
 import { reprocessOreByVolume } from "./OreReprocessor";
 
+var history = createBrowserHistory();
+
+history.listen((location) => {
+  if (window.ga) {
+    window.ga('set', 'page', location.pathname + location.search);
+    window.ga('send', 'pageview');
+  }
+});
+
 function App() {
   return (
-    <Router>
+    <Router history={ history }>
       <nav className="bg-gray-300">
         <div className="container mx-auto flex justify-between items-center px-2">
           <h1 className="color-gray-800 text-2xl px-2 py-2">Eve Echoes Utilities</h1>
