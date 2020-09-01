@@ -5,6 +5,7 @@ import { reprocessOreByVolume } from "../OreReprocessor";
 export default function Ores() {
   const orgOres = JSON.parse(JSON.stringify(ores));
   const [userOres, setUserOres] = useState(orgOres);
+  const [holdSize, setHoldSize] = useState(1000);
   const lastUpdated = new Date();
 
   lastUpdated.setUTCFullYear(lastUpdateTimestamp[0]);
@@ -55,6 +56,8 @@ export default function Ores() {
 
       <p className="mb-4 p-2 bg-gray-300 font-bold">Values last updated {lastUpdated.toLocaleDateString()} {lastUpdated.toLocaleTimeString()}.</p>
 
+      Your hold size: <input type="number" className="py-1 px-2 bg-gray-200 rounded" value={holdSize} onChange={e => setHoldSize(e.target.value)}/>
+
       <table className="w-full">
         <thead>
           <tr>
@@ -63,8 +66,8 @@ export default function Ores() {
             <th className="text-right">Found In</th>
             <th className="text-right">Volume</th>
             <th className="text-right">Aprx Value / Unit</th>
-            <th className="text-right">Aprx Value / 1000m<sup>3</sup></th>
-            <th className="text-right">Aprx Reprocessed Value / 1000m<sup>3</sup></th>
+            <th className="text-right">Aprx Value / {holdSize}m<sup>3</sup></th>
+            <th className="text-right">Aprx Reprocessed Value / {holdSize}m<sup>3</sup></th>
           </tr>
         </thead>
         <tbody>
@@ -76,8 +79,8 @@ export default function Ores() {
               [ORE_TYPE_VERY_RARE]: 'bg-red-200'
             }[ore.type];
 
-            const volumeValue = Math.round(1000 / ore.volume * ore.value);
-            const reprocessResult = reprocessOreByVolume(ore, 1000);
+            const volumeValue = Math.round(holdSize / ore.volume * ore.value);
+            const reprocessResult = reprocessOreByVolume(ore, holdSize);
 
             const reprocessedValue = Math.round(
               reprocessResult.reduce((value, mineralUnits) => {
