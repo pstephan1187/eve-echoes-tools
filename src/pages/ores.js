@@ -105,7 +105,7 @@ export default function Ores() {
                 <td className="p-1 text-right">{ore.volume}m<sup>3</sup></td>
                 <td className="p-1 text-right">
                   <input
-                    className="w-20 bg-white px-2 text-right shadow-inner"
+                    className="w-20 bg-white px-2 text-right rounded shadow-inner"
                     type="number"
                     value={ore.value}
                     onChange={e => setOreValue(ore.label, e.target.value)}
