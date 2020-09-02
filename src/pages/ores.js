@@ -81,11 +81,11 @@ export default function Ores() {
         <tbody>
           {userOres.map(ore => {
             const colorClass = {
-              [ORE_TYPE_COMMON]:   'bg-blue-200 text-black',
-              [ORE_TYPE_UNCOMMON]: 'bg-teal-200 text-black',
-              [ORE_TYPE_SPECIAL]:  'bg-green-200 text-black',
-              [ORE_TYPE_RARE]:     'bg-yellow-200 text-black',
-              [ORE_TYPE_PRECIOUS]: 'bg-red-200 text-black'
+              [ORE_TYPE_COMMON]:   'blue',
+              [ORE_TYPE_UNCOMMON]: 'teal',
+              [ORE_TYPE_SPECIAL]:  'green',
+              [ORE_TYPE_RARE]:     'yellow',
+              [ORE_TYPE_PRECIOUS]: 'red'
             }[ore.type];
 
             const volumeValue = Math.round(holdSize / ore.volume * ore.value);
@@ -97,8 +97,10 @@ export default function Ores() {
               }, 0)
             );
 
+            const betterDeal = reprocessedValue > volumeValue ? 'reprocessed' : 'volume';
+
             return (
-              <tr key={ore.label} className={`${colorClass}`}>
+              <tr key={ore.label} className={`bg-${colorClass}-200 text-black`}>
                 <td className="p-1 text-left">{ore.label}</td>
                 <td className="p-1 text-left">{ore.type}</td>
                 <td className="p-1 text-right">[{ore.minSec}] - [{ore.maxSec}] Security Systems</td>
@@ -113,8 +115,8 @@ export default function Ores() {
                   />
                 isk
               </td>
-                <td className="p-1 text-right">{volumeValue.toLocaleString()}isk</td>
-                <td className="p-1 text-right">
+                <td className={`p-1 text-right ${betterDeal === 'volume' ? `bg-${colorClass}-400` : ''}`}>{volumeValue.toLocaleString()}isk</td>
+                <td className={`p-1 text-right ${betterDeal === 'reprocessed' ? `bg-${colorClass}-400` : ''}`}>
                   <div className="relative group cursor-pointer">
                     {reprocessedValue.toLocaleString()}isk<sup><i className="fas fa-question-circle"></i></sup>
                     <div className="hidden absolute group-hover:block bg-white p-4 rounded shadow right-0 z-10 text-black">{reprocessResult.map(mineralUnits => (
