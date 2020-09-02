@@ -120,7 +120,7 @@ export default function Ores() {
                   <div className="relative group cursor-pointer">
                     {reprocessedValue.toLocaleString()}isk<sup><i className="fas fa-question-circle"></i></sup>
                     <div className="hidden absolute group-hover:block bg-white p-4 rounded shadow right-0 z-10 text-black">{reprocessResult.map(mineralUnits => (
-                      <div key={mineralUnits.mineral.label} className="flex justify-between">
+                      <div key={mineralUnits.mineral.label} className="flex justify-between whitespace-no-wrap">
                         <span className="mr-4">{mineralUnits.mineral.label}:</span>
                         <span>{mineralUnits.units.toLocaleString()} units</span>
                       </div>
