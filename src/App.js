@@ -36,6 +36,8 @@ function App() {
           </Route>
         </Switch>
       </section>
+
+      <footer className="container mx-auto p-4">If you find this tool helpful, feel free to donate some ISK to <strong>Lantern Satchels</strong> via contract.</footer>
     </Router>
   );
 }
