@@ -191,7 +191,13 @@ export default function Ores() {
                 <div className="flex px-4">
                   <div className="flex-none w-64 whitespace-no-wrap pr-4">{mineral.label}</div>
                   <div className="flex-auto whitespace-no-wrap text-right py-1">
-                    <input className="w-16 bg-gray-200 rounded-sm shadow-inner text-right px-1 mr-1" type="text" value={mineral.value} onChange={(e) => setMineralValue(mineral.label, e.target.value) }/>
+                    <input
+                      className="w-16 bg-gray-200 rounded-sm shadow-inner text-right px-1 mr-1"
+                      type="text"
+                      value={mineral.value}
+                      onChange={(e) => setMineralValue(mineral.label, e.target.value)}
+                      onBlur={(e) => resetMineralValue(mineral.label, e.target.value)}
+                    />
                     isk/unit
                   </div>
                 </div>
