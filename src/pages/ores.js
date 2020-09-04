@@ -105,81 +105,83 @@ export default function Ores() {
       </div>
 
 
-      <table className="w-full">
-        <thead>
-          <tr>
-            <th className="text-left">Ore</th>
-            <th className="text-left">Type</th>
-            <th className="text-right">Found In</th>
-            <th className="text-right">Volume</th>
-            <th className="text-right">Unit Value</th>
-            <th className="text-right">
-              <Tooltip tooltip={`The approximate value of a haul if your entire ${holdSize}m<sup>3</sup> hold was filled with the given ore.`}>Hold Value</Tooltip>
-            </th>
-            <th className="text-right">
-              <Tooltip tooltip={`The approximate value of the resulting minerals if ${holdSize}m<sup>3</sup> of the the given ore were reprocessed.`}>
-                Reprocessed Value
-              </Tooltip>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {userOres.map(ore => {
-            const colorClass = {
-              [ORE_TYPE_COMMON]:   'blue',
-              [ORE_TYPE_UNCOMMON]: 'teal',
-              [ORE_TYPE_SPECIAL]:  'green',
-              [ORE_TYPE_RARE]:     'yellow',
-              [ORE_TYPE_PRECIOUS]: 'red'
-            }[ore.type];
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="text-left">Ore</th>
+              <th className="text-left">Type</th>
+              <th className="text-right hidden lg:table-cell">Found In</th>
+              <th className="text-right">Volume</th>
+              <th className="text-right">Unit Value</th>
+              <th className="text-right">
+                <Tooltip tooltip={`The approximate value of a haul if your entire ${holdSize}m<sup>3</sup> hold was filled with the given ore.`}>Hold Value</Tooltip>
+              </th>
+              <th className="text-right">
+                <Tooltip tooltip={`The approximate value of the resulting minerals if ${holdSize}m<sup>3</sup> of the the given ore were reprocessed.`}>
+                  Reprocessed Value
+                </Tooltip>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {userOres.map(ore => {
+              const colorClass = {
+                [ORE_TYPE_COMMON]:   'blue',
+                [ORE_TYPE_UNCOMMON]: 'teal',
+                [ORE_TYPE_SPECIAL]:  'green',
+                [ORE_TYPE_RARE]:     'yellow',
+                [ORE_TYPE_PRECIOUS]: 'red'
+              }[ore.type];
 
-            const volumeValue = Math.round(holdSize / ore.volume * ore.value);
-            const reprocessResult = reprocessOreByVolume(ore, holdSize);
+              const volumeValue = Math.round(holdSize / ore.volume * ore.value);
+              const reprocessResult = reprocessOreByVolume(ore, holdSize);
 
-            const reprocessedValue = Math.round(
-              reprocessResult.reduce((value, mineralUnits) => {
-                const userValue = userMinerals.find(userMineral => userMineral.label === mineralUnits.mineral.label).value;
-                return value + (userValue * mineralUnits.units)
-              }, 0)
-            );
+              const reprocessedValue = Math.round(
+                reprocessResult.reduce((value, mineralUnits) => {
+                  const userValue = userMinerals.find(userMineral => userMineral.label === mineralUnits.mineral.label).value;
+                  return value + (userValue * mineralUnits.units)
+                }, 0)
+              );
 
-            const betterDeal = reprocessedValue > volumeValue ? 'reprocessed' : 'volume';
+              const betterDeal = reprocessedValue > volumeValue ? 'reprocessed' : 'volume';
 
-            return (
-              <tr key={ore.label} className={`bg-${colorClass}-200 text-black`}>
-                <td className="p-1 text-left">{ore.label}</td>
-                <td className="p-1 text-left">{ore.type}</td>
-                <td className="p-1 text-right">[{ore.minSec}] - [{ore.maxSec}] Security Systems</td>
-                <td className="p-1 text-right">{ore.volume}m<sup>3</sup></td>
-                <td className="p-1 text-right">
-                  <input
-                    className="w-20 bg-white px-2 text-right rounded shadow-inner"
-                    type="number"
-                    value={ore.value}
-                    onChange={e => setOreValue(ore.label, e.target.value)}
-                    onBlur={e => resetOreValue(ore.label, e.target.value)}
-                  />
-                isk
-              </td>
-                <td className={`p-1 text-right ${betterDeal === 'volume' ? `bg-${colorClass}-400` : ''}`}>{volumeValue.toLocaleString()}isk</td>
-                <td className={`p-1 text-right ${betterDeal === 'reprocessed' ? `bg-${colorClass}-400` : ''}`}>
-                  <div className="relative group cursor-pointer">
-                    {reprocessedValue.toLocaleString()}isk<sup><i className="fas fa-question-circle"></i></sup>
-                    <div className="hidden absolute group-hover:block bg-white p-4 rounded shadow right-0 z-10 text-black">{reprocessResult.map(mineralUnits => {
-                      return (
-                        <div key={mineralUnits.mineral.label} className="flex justify-between whitespace-no-wrap">
-                          <span className="mr-4">{mineralUnits.mineral.label}:</span>
-                          <span>{mineralUnits.units.toLocaleString()} units</span>
-                        </div>
-                      );
-                    })}</div>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={ore.label} className={`bg-${colorClass}-200 text-black`}>
+                  <td className="p-1 text-left">{ore.label}</td>
+                  <td className="p-1 text-left">{ore.type}</td>
+                  <td className="p-1 text-right hidden lg:table-cell">[{ore.minSec}] - [{ore.maxSec}] <span className="hidden lg:inline">Security Systems</span></td>
+                  <td className="p-1 text-right">{ore.volume}<span className="hidden lg:inline">m<sup>3</sup></span></td>
+                  <td className="p-1 text-right">
+                    <input
+                      className="w-20 bg-white px-2 text-right rounded shadow-inner"
+                      type="number"
+                      value={ore.value}
+                      onChange={e => setOreValue(ore.label, e.target.value)}
+                      onBlur={e => resetOreValue(ore.label, e.target.value)}
+                    />
+                    <span className="hidden lg:inline">isk</span>
+                  </td>
+                  <td className={`p-1 text-right ${betterDeal === 'volume' ? `bg-${colorClass}-400` : ''}`}>{volumeValue.toLocaleString()}<span className="hidden lg:inline">isk</span></td>
+                  <td className={`p-1 text-right ${betterDeal === 'reprocessed' ? `bg-${colorClass}-400` : ''}`}>
+                    <div className="relative group cursor-pointer">
+                      {reprocessedValue.toLocaleString()}isk<sup><i className="fas fa-question-circle"></i></sup>
+                      <div className="hidden absolute group-hover:block bg-white p-4 rounded shadow right-0 z-10 text-black">{reprocessResult.map(mineralUnits => {
+                        return (
+                          <div key={mineralUnits.mineral.label} className="flex justify-between whitespace-no-wrap">
+                            <span className="mr-4">{mineralUnits.mineral.label}:</span>
+                            <span>{mineralUnits.units.toLocaleString()} units</span>
+                          </div>
+                        );
+                      })}</div>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
       {mineralManagerVisibility && (
         <div className="fixed z-50 flex justify-center items-center inset-0">
@@ -189,7 +191,7 @@ export default function Ores() {
             {userMinerals.map(mineral => {
               return (
                 <div className="flex px-4">
-                  <div className="flex-none w-64 whitespace-no-wrap pr-4">{mineral.label}</div>
+                  <div className="flex-none w-32 whitespace-no-wrap pr-4">{mineral.label}</div>
                   <div className="flex-auto whitespace-no-wrap text-right py-1">
                     <input
                       className="w-16 bg-gray-200 rounded-sm shadow-inner text-right px-1 mr-1"
