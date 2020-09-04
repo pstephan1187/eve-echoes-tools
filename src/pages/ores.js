@@ -88,7 +88,7 @@ export default function Ores() {
   }
 
   return (
-    <div className="mb-32">
+    <div>
       <h2 className="text-4xl mb-4">Ores</h2>
 
       <p className="mb-4">The values of the ores are not updated automatically. I update them periodically based on approximate market rates of Jita and/or Alikara and additional nearby ITCs. Due to the daily variance of the market, you can set your own values if you'd like.</p>
@@ -105,7 +105,7 @@ export default function Ores() {
       </div>
 
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto pb-32">
         <table className="w-full">
           <thead>
             <tr>
