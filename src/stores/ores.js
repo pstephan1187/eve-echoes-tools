@@ -1,10 +1,22 @@
+import { useStickyState } from '../utils';
+
 export const ORE_TYPE_COMMON = "Common";
 export const ORE_TYPE_UNCOMMON = "Uncommon";
 export const ORE_TYPE_SPECIAL = "Special";
 export const ORE_TYPE_RARE = "Rare";
 export const ORE_TYPE_PRECIOUS = "Precious";
 
-export const lastUpdateTimestamp = [2020, 9, 5, 22, 36];
+const lastUpdateTimestamp = [2020, 9, 5, 22, 36];
+
+const lastUpdated = new Date();
+lastUpdated.setUTCFullYear(lastUpdateTimestamp[0]);
+lastUpdated.setUTCMonth(lastUpdateTimestamp[1] - 1);
+lastUpdated.setUTCDate(lastUpdateTimestamp[2]);
+lastUpdated.setUTCHours(lastUpdateTimestamp[3] + (lastUpdated.getTimezoneOffset() / 60));
+lastUpdated.setUTCMinutes(lastUpdateTimestamp[4]);
+lastUpdated.setUTCSeconds(0);
+
+export { lastUpdated };
 
 export const ores = [
   { label: "Veldspar", type: ORE_TYPE_COMMON, minSec: '-1.0', maxSec: '1.0', volume: 0.1, value: 6 },
@@ -27,4 +39,45 @@ export const ores = [
   { label: "Arkonor", type: ORE_TYPE_PRECIOUS, minSec: '-1.0', maxSec: '-0.6', volume: 6.4, value: 856 },
   { label: "Bistot", type: ORE_TYPE_PRECIOUS, minSec: '-1.0', maxSec: '-0.4', volume: 6.4, value: 1048 },
   { label: "Mercoxit", type: ORE_TYPE_PRECIOUS, minSec: '-1.0', maxSec: '-0.8', volume: 8, value: 541 },
-]
+];
+
+export const useOres = () => {
+  const [userOres, setUserOres] = useStickyState(
+    JSON.parse(JSON.stringify(ores)),
+    'ores'
+  );
+
+  const setOreValue = (oreName, newValue) => {
+    const newOreValues = JSON.parse(JSON.stringify(userOres));
+
+    for (const i in newOreValues) {
+      if (newOreValues[i].label === oreName) {
+        newOreValues[i].value = newValue;
+      }
+    }
+
+    setUserOres(newOreValues);
+  };
+
+  const resetOreValue = (oreName, newValue) => {
+    const newOreValues = JSON.parse(JSON.stringify(userOres))
+
+    if (newValue === null || newValue === '') {
+      for (const i in ores) {
+        if (ores[i].label === oreName) {
+          newValue = ores[i].value;
+        }
+      }
+
+      for (const i in newOreValues) {
+        if (newOreValues[i].label === oreName) {
+          newOreValues[i].value = newValue;
+        }
+      }
+    }
+
+    setUserOres(newOreValues);
+  }
+
+  return { userOres, setOreValue, resetOreValue };
+}
