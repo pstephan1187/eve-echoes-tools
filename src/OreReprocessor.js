@@ -12,116 +12,116 @@ const morphite = minerals[7];
 const map = [
   {
     label: "Veldspar", reprocessesInto: [
-      { mineral: tritanium, amount: 1.62 },
+      { mineral: tritanium, amount: 4.14 },
     ]
   },
   {
     label: "Scordite", reprocessesInto: [
-      { mineral: tritanium, amount: 0.63 },
-      { mineral: pyerite, amount: 0.45 },
+      { mineral: tritanium, amount: 1.62 },
+      { mineral: pyerite, amount: 1.15 },
     ]
   },
   {
     label: "Plagioclase", reprocessesInto: [
-      { mineral: tritanium, amount: 0.2 },
-      { mineral: pyerite, amount: 0.25 },
-      { mineral: mexallon, amount: 0.38 },
+      { mineral: tritanium, amount: 0.51 },
+      { mineral: pyerite, amount: 0.65 },
+      { mineral: mexallon, amount: 0.97 },
     ]
   },
   {
     label: "Omber", reprocessesInto: [
-      { mineral: tritanium, amount: 2.34 },
-      { mineral: pyerite, amount: 0.3 },
-      { mineral: isogen, amount: 0.21 },
+      { mineral: tritanium, amount: 6 },
+      { mineral: pyerite, amount: 0.76 },
+      { mineral: isogen, amount: 0.55 },
     ]
   },
   {
     label: "Kernite", reprocessesInto: [
-      { mineral: tritanium, amount: 1.04 },
-      { mineral: mexallon, amount: 1.87 },
-      { mineral: isogen, amount: 0.19 },
+      { mineral: tritanium, amount: 2.67 },
+      { mineral: mexallon, amount: 4.81 },
+      { mineral: isogen, amount: 0.48 },
     ]
   },
 
   {
     label: "Pyroxeres", reprocessesInto: [
-      { mineral: tritanium, amount: 6.84 },
-      { mineral: pyerite, amount: 2.18 },
-      { mineral: mexallon, amount: 0.98 },
-      { mineral: nocxium, amount: 0.12 },
+      { mineral: tritanium, amount: 17.55 },
+      { mineral: pyerite, amount: 5.6 },
+      { mineral: mexallon, amount: 2.5 },
+      { mineral: nocxium, amount: 0.3 },
     ]
   },
   {
     label: "Hemorphite", reprocessesInto: [
-      { mineral: tritanium, amount: 21.45 },
-      { mineral: isogen, amount: 0.62 },
-      { mineral: nocxium, amount: 0.05 },
-      { mineral: zydrine, amount: 0.2 },
+      { mineral: tritanium, amount: 55 },
+      { mineral: isogen, amount: 1.6 },
+      { mineral: nocxium, amount: 0.13 },
+      { mineral: zydrine, amount: 0.5 },
     ]
   },
   {
     label: "Dark Ochre", reprocessesInto: [
-      { mineral: tritanium, amount: 3.74 },
-      { mineral: isogen, amount: 0.22 },
-      { mineral: nocxium, amount: 0.17 },
+      { mineral: tritanium, amount: 9.6 },
+      { mineral: isogen, amount: 0.56 },
+      { mineral: nocxium, amount: 0.43 },
     ]
   },
   {
     label: "Gneiss", reprocessesInto: [
-      { mineral: pyerite, amount: 3.43 },
-      { mineral: mexallon, amount: 3.59 },
-      { mineral: isogen, amount: 0.71 },
+      { mineral: pyerite, amount: 8.8 },
+      { mineral: mexallon, amount: 9.2 },
+      { mineral: isogen, amount: 1.84 },
     ]
   },
 
   {
     label: "Jaspet", reprocessesInto: [
-      { mineral: mexallon, amount: 7.28 },
-      { mineral: nocxium, amount: 0.14 },
-      { mineral: zydrine, amount: 0.17 },
+      { mineral: mexallon, amount: 24.61 },
+      { mineral: nocxium, amount: 0.48 },
+      { mineral: zydrine, amount: 0.56 },
     ]
   },
   {
     label: "Crokite", reprocessesInto: [
-      { mineral: tritanium, amount: 116.4 },
-      { mineral: nocxium, amount: 0.28 },
-      { mineral: zydrine, amount: 0.29 },
+      { mineral: tritanium, amount: 388 },
+      { mineral: nocxium, amount: 0.94 },
+      { mineral: zydrine, amount: 0.96 },
     ]
   },
 
   {
     label: "Bistot", reprocessesInto: [
-      { mineral: pyerite, amount: 18.36 },
-      { mineral: zydrine, amount: 0.11 },
-      { mineral: megacyte, amount: 0.24 },
+      { mineral: pyerite, amount: 61.2 },
+      { mineral: zydrine, amount: 0.36 },
+      { mineral: megacyte, amount: 0.79 },
     ]
   },
   {
     label: "Arkonor", reprocessesInto: [
-      { mineral: tritanium, amount: 26.4 },
-      { mineral: mexallon, amount: 3 },
-      { mineral: megacyte, amount: 0.31 },
+      { mineral: tritanium, amount: 88 },
+      { mineral: mexallon, amount: 10 },
+      { mineral: megacyte, amount: 1.04 },
     ]
   },
   {
     label: "Mercoxit", reprocessesInto: [
-      { mineral: morphite, amount: 0.18 },
+      { mineral: morphite, amount: 0.6 },
     ]
   },
   {
     label: "Hedbergite", reprocessesInto: [
-      { mineral: pyerite, amount: 8.19 },
-      { mineral: isogen, amount: 1.38 },
-      { mineral: nocxium, amount: 0.03 },
-      { mineral: zydrine, amount: 0.04 },
+      { mineral: pyerite, amount: 27.31 },
+      { mineral: isogen, amount: 4.58 },
+      { mineral: nocxium, amount: 0.09 },
+      { mineral: zydrine, amount: 0.14 },
     ]
   },
   {
     label: "Spodumain", reprocessesInto: [
-      { mineral: tritanium, amount: 76.83 },
-      { mineral: pyerite, amount: 14.59 },
-      { mineral: mexallon, amount: 1.4 },
-      { mineral: isogen, amount: 0.23 },
+      { mineral: tritanium, amount: 197 },
+      { mineral: pyerite, amount: 37.4 },
+      { mineral: mexallon, amount: 3.6 },
+      { mineral: isogen, amount: 0.6 },
     ]
   },
 ];
