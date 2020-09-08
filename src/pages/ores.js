@@ -1,13 +1,18 @@
 import React from 'react';
 import { useOres, lastUpdated, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_SPECIAL, ORE_TYPE_RARE, ORE_TYPE_PRECIOUS } from '../stores/ores';
 import { useMinerals } from '../stores/minerals';
-import { reprocessOreByVolume } from "../OreReprocessor";
+import { useOreReprocessor } from "../OreReprocessor";
+import { useSkills } from "../Skills";
 import Tooltip from "../components/tooltip";
 import { useSuperStickyState } from "../utils";
 import { useMineralManager } from '../components/mineral-manager';
+import { useSkillManager } from '../components/skill-manager';
 
 const OreRow = ({ ore, holdSize, userMinerals }) => {
   const { userOres, setOreValue, resetOreValue } = useOres();
+  const { getOreReprocessingModifier } = useSkills();
+  const { reprocessOreByVolume } = useOreReprocessor();
+  const modifier = getOreReprocessingModifier(ore);
   const colorClass = {
     [ORE_TYPE_COMMON]: 'blue',
     [ORE_TYPE_UNCOMMON]: 'teal',
@@ -54,6 +59,7 @@ const OreRow = ({ ore, holdSize, userMinerals }) => {
             return (
               <div key={mineralUnits.mineral.label} className="flex justify-between whitespace-no-wrap">
                 <span className="mr-4">{mineralUnits.mineral.label}:</span>
+                <span className="mr-4">@{modifier * 100}%</span>
                 <span>{mineralUnits.units.toLocaleString()} units</span>
               </div>
             );
@@ -104,6 +110,7 @@ const Ores = () => {
   const { userOres } = useOres();
   const { userMinerals } = useMinerals();
   const { MineralManager, openMineralManager } = useMineralManager();
+  const { SkillManager, openSkillManager } = useSkillManager();
   const [ holdSize, setHoldSize ] = useSuperStickyState(1000, 'holdSize');
 
   return (
@@ -114,12 +121,13 @@ const Ores = () => {
 
       <p className="mb-4 p-2 bg-gray-300 font-bold">Values last updated {lastUpdated.toLocaleDateString()} {lastUpdated.toLocaleTimeString()}.</p>
 
-      <div className="flex justify-between items-center mb-2">
-        <div>
+      <div className="flex flex-wrap justify-between items-center mb-2">
+        <div className="w-full sm:w-auto mb-2">
           Your hold size: <input type="number" className="py-1 px-2 bg-gray-200 rounded w-20" value={holdSize} onChange={e => setHoldSize(e.target.value)} />m<sup>3</sup>
         </div>
-        <div>
-          <button className="bg-blue-600 text-blue-100 py-1 px-2 rounded hover:bg-blue-700" onClick={openMineralManager}>Manage mineral values</button>
+        <div className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto bg-blue-600 text-blue-100 py-1 px-2 mr-2 mb-2 rounded hover:bg-blue-700" onClick={openSkillManager}>Manage skill levels</button>
+          <button className="w-full sm:w-auto bg-blue-600 text-blue-100 py-1 px-2 rounded hover:bg-blue-700" onClick={openMineralManager}>Manage mineral values</button>
         </div>
       </div>
 
@@ -130,6 +138,7 @@ const Ores = () => {
       />
 
       <MineralManager />
+      <SkillManager />
     </div>
   );
 }

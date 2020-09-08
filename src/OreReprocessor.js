@@ -1,4 +1,5 @@
 import { minerals } from "./stores/minerals";
+import { useSkills } from "./Skills";
 
 const tritanium = minerals[0];
 const pyerite = minerals[1];
@@ -126,10 +127,26 @@ const map = [
   },
 ];
 
-export const reprocessOreByVolume = (ore, volume) => {
-  const mapping = map.find(entry => entry.label === ore.label);
+export const useOreReprocessor = () => {
+  const { getOreReprocessingModifier } = useSkills();
 
-  return mapping.reprocessesInto.map(mineralAmount => {
-    return { mineral: mineralAmount.mineral, units: Math.floor(mineralAmount.amount * (volume / ore.volume))}
-  });
+  const reprocessOreByUnit = (ore, units) => {
+    const mapping = map.find(entry => entry.label === ore.label);
+    const skillModifier = getOreReprocessingModifier(ore);
+
+    return mapping.reprocessesInto.map(mineralAmount => {
+      return { mineral: mineralAmount.mineral, units: Math.floor(mineralAmount.amount * units * skillModifier) }
+    });
+  }
+
+  const reprocessOreByVolume = (ore, volume) => {
+    const mapping = map.find(entry => entry.label === ore.label);
+    const skillModifier = getOreReprocessingModifier(ore);
+
+    return mapping.reprocessesInto.map(mineralAmount => {
+      return { mineral: mineralAmount.mineral, units: Math.floor(mineralAmount.amount * (volume / ore.volume) * skillModifier) }
+    });
+  }
+
+  return { reprocessOreByUnit, reprocessOreByVolume };
 }
