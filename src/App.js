@@ -1,10 +1,6 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
-import {
-  Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { Router, Switch, Route } from 'react-router-dom';
 
 import Ores from "./pages/ores";
 import Home from "./pages/home";
@@ -27,17 +23,17 @@ function App() {
       <Nav />
 
       <section className="container mx-auto p-4">
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/ores">
-            <Ores />
-          </Route>
-        </Switch>
-      </section>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/ores">
+              <Ores />
+            </Route>
+          </Switch>
+        </section>
 
-      <footer className="container mx-auto p-4">If you find this tool helpful, feel free to donate some ISK to <strong>Lantern Satchels</strong> via contract.</footer>
+        <footer className="container mx-auto p-4">If you find this tool helpful, feel free to donate some ISK to <strong>Lantern Satchels</strong> via contract.</footer>
     </Router>
   );
 }
