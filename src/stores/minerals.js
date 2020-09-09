@@ -1,8 +1,7 @@
-import { useStickyState } from '../utils';
+import { createGlobalState } from 'react-hooks-global-state';
+import { getStickyState, setStickyState } from '../utils';
 
-export const lastUpdateTimestamp = [2020, 9, 5, 22, 36];
-
-export const minerals = [
+export const orgMinerals = [
   { label: "Tritanium", volume: 0.01, value: 2 },
   { label: "Pyerite", volume: 0.01, value: 22 },
   { label: "Mexallon", volume: 0.01, value: 38 },
@@ -13,43 +12,61 @@ export const minerals = [
   { label: "Morphite", volume: 0.01, value: 3001 },
 ];
 
+const initialState = {
+  minerals: getStickyState(JSON.parse(JSON.stringify(orgMinerals)), 'minerals'),
+};
+
+const {
+  useGlobalState,
+  getGlobalState,
+  setGlobalState,
+} = createGlobalState(initialState);
+
 export const useMinerals = () => {
-  const [userMinerals, setUserMinerals] = useStickyState(
-    JSON.parse(JSON.stringify(minerals)),
-    'minerals'
-  );
+  const [minerals, setMinerals] = useGlobalState('minerals');
 
-  const setMineralValue = (mineralName, newValue) => {
-    const newMineralValues = JSON.parse(JSON.stringify(userMinerals));
+  const setMineralValue = (mineral, value) => {
+    const newMinerals = [...minerals];
 
-    for (const i in newMineralValues) {
-      if (newMineralValues[i].label === mineralName) {
-        newMineralValues[i].value = newValue;
+    for (const i in newMinerals) {
+      if (newMinerals[i] === mineral) {
+        const newMineral = { ...mineral };
+        newMineral.value = value * 1;
+        newMinerals[i] = newMineral;
+
+        break;
       }
     }
 
-    setUserMinerals(newMineralValues);
-  };
-
-  const resetMineralValue = (mineralName, newValue) => {
-    const newMineralValues = JSON.parse(JSON.stringify(userMinerals))
-
-    if (newValue === null || newValue === '') {
-      for (const i in minerals) {
-        if (minerals[i].label === mineralName) {
-          newValue = minerals[i].value;
-        }
-      }
-
-      for (const i in newMineralValues) {
-        if (newMineralValues[i].label === mineralName) {
-          newMineralValues[i].value = newValue;
-        }
-      }
-    }
-
-    setUserMinerals(newMineralValues);
+    setStickyState(newMinerals, 'minerals');
+    setMinerals(newMinerals);
   }
 
-  return { userMinerals, setMineralValue, resetMineralValue };
+  const resetMineralValue = (mineral) => {
+    const newMinerals = [...minerals];
+
+    for (const i in newMinerals) {
+      if (newMinerals[i] === mineral) {
+        const newMineral = { ...mineral };
+        newMineral.value = orgMinerals.find(
+          orgMineral => orgMineral.label === newMineral.label
+        ).value * 1;
+        newMinerals[i] = newMineral;
+
+        break;
+      }
+    }
+
+    setStickyState(newMinerals, 'minerals');
+    setMinerals(newMinerals);
+  }
+
+  return {
+    minerals: minerals,
+    setMineralValue,
+    resetMineralValue,
+  }
 }
+
+export const getMinerals = () => getGlobalState('minerals');
+export const setMinerals = (value) => setGlobalState('minerals', value);

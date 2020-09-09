@@ -1,6 +1,7 @@
-import { minerals } from "./stores/minerals";
+import { getMinerals } from "./stores/minerals";
 import { useSkills } from "./Skills";
 
+const minerals = getMinerals();
 const tritanium = minerals[0];
 const pyerite = minerals[1];
 const mexallon = minerals[2];
