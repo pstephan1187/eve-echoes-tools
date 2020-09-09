@@ -1,15 +1,16 @@
+// https://github.com/dai-shi/react-hooks-global-state
 import { createGlobalState } from 'react-hooks-global-state';
 import { getStickyState, setStickyState } from '../utils';
 
 export const orgMinerals = [
   { label: "Tritanium", volume: 0.01, value: 2 },
-  { label: "Pyerite", volume: 0.01, value: 22 },
-  { label: "Mexallon", volume: 0.01, value: 38 },
-  { label: "Isogen", volume: 0.01, value: 127 },
-  { label: "Nocxium", volume: 0.01, value: 1203 },
-  { label: "Zydrine", volume: 0.01, value: 900 },
-  { label: "Megacyte", volume: 0.01, value: 3400 },
-  { label: "Morphite", volume: 0.01, value: 3001 },
+  { label: "Pyerite", volume: 0.01, value: 26 },
+  { label: "Mexallon", volume: 0.01, value: 40 },
+  { label: "Isogen", volume: 0.01, value: 141 },
+  { label: "Nocxium", volume: 0.01, value: 1305 },
+  { label: "Zydrine", volume: 0.01, value: 1150 },
+  { label: "Megacyte", volume: 0.01, value: 3623 },
+  { label: "Morphite", volume: 0.01, value: 2505 },
 ];
 
 const initialState = {
