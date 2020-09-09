@@ -9,7 +9,7 @@ import MineralManager from '../components/mineral-manager';
 import { useSkillManager } from '../components/skill-manager';
 
 const OreRow = ({ ore, holdSize, userMinerals }) => {
-  const { userOres, setOreValue, resetOreValue } = useOres();
+  const { ores, setOreValue, resetOreValue } = useOres();
   const { getOreReprocessingModifier } = useSkills();
   const { reprocessOreByVolume } = useOreReprocessor();
   const modifier = getOreReprocessingModifier(ore);
@@ -21,7 +21,7 @@ const OreRow = ({ ore, holdSize, userMinerals }) => {
     [ORE_TYPE_PRECIOUS]: 'red'
   }[ore.type];
 
-  ore = userOres.find(userOre => userOre.label === ore.label);
+  ore = ores.find(userOre => userOre.label === ore.label);
 
   const volumeValue = Math.round(holdSize / ore.volume * ore.value);
   const reprocessResult = reprocessOreByVolume(ore, holdSize);
@@ -46,8 +46,8 @@ const OreRow = ({ ore, holdSize, userMinerals }) => {
           className="w-20 bg-white px-2 text-right rounded shadow-inner"
           type="number"
           value={ore.value}
-          onChange={e => setOreValue(ore.label, e.target.value)}
-          onBlur={e => resetOreValue(ore.label, e.target.value)}
+          onChange={e => setOreValue(ore, e.target.value)}
+          onBlur={e => resetOreValue(ore, e.target.value)}
         />
         <span className="hidden lg:inline">isk</span>
       </td>
@@ -70,8 +70,9 @@ const OreRow = ({ ore, holdSize, userMinerals }) => {
   );
 }
 
-const OreTable = ({ userOres, holdSize }) => {
+const OreTable = ({ holdSize }) => {
   const { minerals } = useMinerals();
+  const { ores } = useOres();
 
   return (
     <div className="overflow-x-auto pb-32">
@@ -94,7 +95,7 @@ const OreTable = ({ userOres, holdSize }) => {
           </tr>
         </thead>
         <tbody>
-          {userOres.map(ore => (
+          {ores.map(ore => (
             <OreRow
               key={ore.label}
               ore={ore}
@@ -109,7 +110,6 @@ const OreTable = ({ userOres, holdSize }) => {
 }
 
 const Ores = () => {
-  const { userOres } = useOres();
   const { SkillManager, openSkillManager } = useSkillManager();
   const [holdSize, setHoldSize] = useSuperStickyState(1000, 'holdSize');
   const [mineralManagerVisible, setMineralManagerVisible] = useState(false);
@@ -132,10 +132,7 @@ const Ores = () => {
         </div>
       </div>
 
-      <OreTable
-        holdSize={holdSize}
-        userOres={userOres}
-      />
+      <OreTable holdSize={holdSize} />
 
       {mineralManagerVisible && (
         <MineralManager onCloseMineralManager={() => setMineralManagerVisible(false)} />

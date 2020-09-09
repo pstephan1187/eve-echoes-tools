@@ -1,4 +1,6 @@
-import { useStickyState } from '../utils';
+// https://github.com/dai-shi/react-hooks-global-state
+import { createGlobalState } from 'react-hooks-global-state';
+import { getStickyState, setStickyState, toUniversalTime } from '../utils';
 
 export const ORE_TYPE_COMMON = "Common";
 export const ORE_TYPE_UNCOMMON = "Uncommon";
@@ -6,19 +8,9 @@ export const ORE_TYPE_SPECIAL = "Special";
 export const ORE_TYPE_RARE = "Rare";
 export const ORE_TYPE_PRECIOUS = "Precious";
 
-const lastUpdateTimestamp = [2020, 9, 5, 22, 36];
+export const lastUpdated = toUniversalTime(2020, 9, 5, 22, 36);
 
-const lastUpdated = new Date();
-lastUpdated.setUTCFullYear(lastUpdateTimestamp[0]);
-lastUpdated.setUTCMonth(lastUpdateTimestamp[1] - 1);
-lastUpdated.setUTCDate(lastUpdateTimestamp[2]);
-lastUpdated.setUTCHours(lastUpdateTimestamp[3] + (lastUpdated.getTimezoneOffset() / 60));
-lastUpdated.setUTCMinutes(lastUpdateTimestamp[4]);
-lastUpdated.setUTCSeconds(0);
-
-export { lastUpdated };
-
-export const ores = [
+export const orgOres = [
   { label: "Veldspar", type: ORE_TYPE_COMMON, minSec: '-1.0', maxSec: '1.0', volume: 0.1, value: 7 },
   { label: "Scordite", type: ORE_TYPE_COMMON, minSec: '-1.0', maxSec: '1.0', volume: 0.15, value: 14 },
   { label: "Plagioclase", type: ORE_TYPE_COMMON, minSec: '0.3', maxSec: '0.8', volume: 0.35, value: 26 },
@@ -41,43 +33,64 @@ export const ores = [
   { label: "Mercoxit", type: ORE_TYPE_PRECIOUS, minSec: '-1.0', maxSec: '-0.8', volume: 8, value: 1001 },
 ];
 
+const initialState = {
+  ores: getStickyState(JSON.parse(JSON.stringify(orgOres)), 'ores')
+};
+
+const {
+  useGlobalState,
+  getGlobalState,
+  setGlobalState,
+} = createGlobalState(initialState);
+
 export const useOres = () => {
-  const [userOres, setUserOres] = useStickyState(
-    JSON.parse(JSON.stringify(ores)),
-    'ores'
-  );
+  const [ores, setOres] = useGlobalState('ores');
 
-  const setOreValue = (oreName, newValue) => {
-    const newOreValues = JSON.parse(JSON.stringify(userOres));
+  const setOreValue = (ore, newValue) => {
+    const newOres = [...ores];
 
-    for (const i in newOreValues) {
-      if (newOreValues[i].label === oreName) {
-        newOreValues[i].value = newValue;
+    for (const i in newOres) {
+      if (newOres[i] === ore) {
+        const newOre = { ...ore, value: newValue };
+        newOres[i] = newOre;
+
+        break
       }
     }
 
-    setUserOres(newOreValues);
+    setStickyState(newOres, 'ores');
+    setOres(newOres);
   };
 
-  const resetOreValue = (oreName, newValue) => {
-    const newOreValues = JSON.parse(JSON.stringify(userOres))
+  const resetOreValue = (ore, value) => {
+    const newOres = [...ores]
 
-    if (newValue === null || newValue === '') {
-      for (const i in ores) {
-        if (ores[i].label === oreName) {
-          newValue = ores[i].value;
-        }
-      }
+    if (value !== '' && (value * 1 === 0 || !isNaN(value))) {
+      return;
+    }
 
-      for (const i in newOreValues) {
-        if (newOreValues[i].label === oreName) {
-          newOreValues[i].value = newValue;
-        }
+    for (const i in newOres) {
+      if (newOres[i] === ore) {
+        const newOre = { ...ore };
+        newOre.value = orgOres.find(
+          orgOre => orgOre.label === newOre.label
+        ).value;
+        newOres[i] = newOre;
+
+        break;
       }
     }
 
-    setUserOres(newOreValues);
+    setStickyState(newOres, 'ores');
+    setOres(newOres);
   }
 
-  return { userOres, setOreValue, resetOreValue };
+  return {
+    ores: ores,
+    setOreValue,
+    resetOreValue,
+  }
 }
+
+export const getOres = () => getGlobalState('ores');
+export const setOres = (value) => setGlobalState('ores', value);
