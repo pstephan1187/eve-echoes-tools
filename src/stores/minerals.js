@@ -32,7 +32,7 @@ export const useMinerals = () => {
     for (const i in newMinerals) {
       if (newMinerals[i] === mineral) {
         const newMineral = { ...mineral };
-        newMineral.value = value * 1;
+        newMineral.value = value;
         newMinerals[i] = newMineral;
 
         break;
@@ -43,15 +43,19 @@ export const useMinerals = () => {
     setMinerals(newMinerals);
   }
 
-  const resetMineralValue = (mineral) => {
+  const resetMineralValue = (mineral, value) => {
     const newMinerals = [...minerals];
+
+    if (value !== '' && (value * 1 === 0 || !isNaN(value))) {
+      return;
+    }
 
     for (const i in newMinerals) {
       if (newMinerals[i] === mineral) {
         const newMineral = { ...mineral };
         newMineral.value = orgMinerals.find(
           orgMineral => orgMineral.label === newMineral.label
-        ).value * 1;
+        ).value;
         newMinerals[i] = newMineral;
 
         break;
