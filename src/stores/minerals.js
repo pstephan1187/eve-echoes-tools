@@ -1,16 +1,17 @@
 // https://github.com/dai-shi/react-hooks-global-state
 import { createGlobalState } from 'react-hooks-global-state';
 import { getStickyState, setStickyState } from '../utils';
+import marketValues from '../MarketValues';
 
 export const orgMinerals = [
-  { label: "Tritanium", volume: 0.01, value: 2 },
-  { label: "Pyerite", volume: 0.01, value: 26 },
-  { label: "Mexallon", volume: 0.01, value: 40 },
-  { label: "Isogen", volume: 0.01, value: 141 },
-  { label: "Nocxium", volume: 0.01, value: 1305 },
-  { label: "Zydrine", volume: 0.01, value: 1150 },
-  { label: "Megacyte", volume: 0.01, value: 3623 },
-  { label: "Morphite", volume: 0.01, value: 2505 },
+  { label: "Tritanium", volume: 0.01, value: marketValues.tritanium.jita },
+  { label: "Pyerite",   volume: 0.01, value: marketValues.pyerite.jita },
+  { label: "Mexallon",  volume: 0.01, value: marketValues.mexallon.jita },
+  { label: "Isogen",    volume: 0.01, value: marketValues.isogen.jita },
+  { label: "Nocxium",   volume: 0.01, value: marketValues.nocxium.jita },
+  { label: "Zydrine",   volume: 0.01, value: marketValues.zydrine.jita },
+  { label: "Megacyte",  volume: 0.01, value: marketValues.megacyte.jita },
+  { label: "Morphite",  volume: 0.01, value: marketValues.morphite.jita },
 ];
 
 const initialState = {
