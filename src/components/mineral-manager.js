@@ -1,12 +1,12 @@
 import React from 'react';
 import { useMinerals } from '../stores/minerals';
 
-export default ({ onCloseMineralManager }) => {
+export default ({ onClose }) => {
   const { minerals, setMineralValue, resetMineralValue } = useMinerals();
 
   return (
     <div key="mineral-manager" className="fixed z-50 flex justify-center items-center inset-0">
-      <div className="fixed z-0 w-full h-full bg-gray-700 opacity-75" onClick={onCloseMineralManager}></div>
+      <div className="fixed z-0 w-full h-full bg-gray-700 opacity-75" onClick={onClose}></div>
       <div className="relative z-10 bg-white rounded-md overflow-hidden shadow-md w-3/4 md:w-1/2 lg:w-1/3 max-h-screen overflow-y-auto">
         <h3 className="text-xl mb-4 py-2 px-4 bg-gray-200">Minerals</h3>
         {minerals.map(mineral => (
@@ -25,7 +25,7 @@ export default ({ onCloseMineralManager }) => {
           </div>
         ))}
         <div className="flex justify-end p-4">
-          <button className="bg-blue-600 text-blue-100 py-1 px-2 rounded" onClick={onCloseMineralManager}>Done</button>
+          <button className="bg-blue-600 text-blue-100 py-1 px-2 rounded" onClick={onClose}>Done</button>
         </div>
       </div>
     </div>

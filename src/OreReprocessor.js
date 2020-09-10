@@ -1,5 +1,6 @@
 import { getMinerals } from "./stores/minerals";
-import { useSkills } from "./Skills";
+import { RPSkill } from "./SkillTypes";
+import { skills } from "./stores/skills";
 
 const minerals = getMinerals();
 const tritanium = minerals[0];
@@ -129,7 +130,18 @@ const map = [
 ];
 
 export const useOreReprocessor = () => {
-  const { getOreReprocessingModifier } = useSkills();
+
+  const getOreReprocessingModifier = (ore) => {
+    let modifiedSkill = RPSkill.baseSkill;
+
+    for (const i in skills) {
+      if (skills[i] instanceof RPSkill) {
+        modifiedSkill += skills[i].getReprocessModifier(ore);
+      }
+    }
+
+    return Math.round(modifiedSkill * 10000) / 10000;// Percentage to the second decimal
+  }
 
   const reprocessOreByUnit = (ore, units) => {
     const mapping = map.find(entry => entry.label === ore.label);
@@ -149,5 +161,5 @@ export const useOreReprocessor = () => {
     });
   }
 
-  return { reprocessOreByUnit, reprocessOreByVolume };
+  return { reprocessOreByUnit, reprocessOreByVolume, getOreReprocessingModifier };
 }

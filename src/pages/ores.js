@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { useOres, lastUpdated, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_SPECIAL, ORE_TYPE_RARE, ORE_TYPE_PRECIOUS } from '../stores/ores';
 import { useMinerals } from '../stores/minerals';
 import { useOreReprocessor } from "../OreReprocessor";
-import { useSkills } from "../Skills";
 import Tooltip from "../components/tooltip";
 import { useSuperStickyState } from "../utils";
 import MineralManager from '../components/mineral-manager';
-import { useSkillManager } from '../components/skill-manager';
+import SkillManager from '../components/skill-manager';
 
 const OreRow = ({ ore, holdSize, userMinerals }) => {
   const { ores, setOreValue, resetOreValue } = useOres();
-  const { getOreReprocessingModifier } = useSkills();
-  const { reprocessOreByVolume } = useOreReprocessor();
+  const { reprocessOreByVolume, getOreReprocessingModifier } = useOreReprocessor();
   const modifier = getOreReprocessingModifier(ore);
   const colorClass = {
     [ORE_TYPE_COMMON]: 'blue',
@@ -110,9 +108,10 @@ const OreTable = ({ holdSize }) => {
 }
 
 const Ores = () => {
-  const { SkillManager, openSkillManager } = useSkillManager();
   const [holdSize, setHoldSize] = useSuperStickyState(1000, 'holdSize');
   const [mineralManagerVisible, setMineralManagerVisible] = useState(false);
+  const [skillManagerVisible, setSkillManagerVisible] = useState(false);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   return (
     <div>
@@ -127,7 +126,7 @@ const Ores = () => {
           Your hold size: <input type="number" className="py-1 px-2 bg-gray-200 rounded w-20" value={holdSize} onChange={e => setHoldSize(e.target.value)} />m<sup>3</sup>
         </div>
         <div className="w-full sm:w-auto">
-          <button className="w-full sm:w-auto bg-blue-600 text-blue-100 py-1 px-2 mr-2 mb-2 rounded hover:bg-blue-700" onClick={openSkillManager}>Manage skill levels</button>
+          <button className="w-full sm:w-auto bg-blue-600 text-blue-100 py-1 px-2 mr-2 mb-2 rounded hover:bg-blue-700" onClick={() => setSkillManagerVisible(true)}>Manage skill levels</button>
           <button className="w-full sm:w-auto bg-blue-600 text-blue-100 py-1 px-2 rounded hover:bg-blue-700" onClick={() => setMineralManagerVisible(true)}>Manage mineral values</button>
         </div>
       </div>
@@ -135,9 +134,12 @@ const Ores = () => {
       <OreTable holdSize={holdSize} />
 
       {mineralManagerVisible && (
-        <MineralManager onCloseMineralManager={() => setMineralManagerVisible(false)} />
+        <MineralManager onClose={() => setMineralManagerVisible(false)} />
       )}
-      <SkillManager />
+
+      {skillManagerVisible && (
+        <SkillManager onClose={() => setSkillManagerVisible(false)} onUpdate={forceUpdate} />
+      )}
     </div>
   );
 }
