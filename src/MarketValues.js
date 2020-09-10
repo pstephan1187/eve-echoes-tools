@@ -1,3 +1,7 @@
+import { toUniversalTime } from './utils';
+
+export const lastUpdated = toUniversalTime(2020, 9, 10, 8, 18);
+
 export default {
   // ores
   veldspar:     { jita:    7 },

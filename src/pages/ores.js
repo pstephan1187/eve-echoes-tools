@@ -1,5 +1,6 @@
 import React, { useState, useReducer } from 'react';
-import { useOres, lastUpdated, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_SPECIAL, ORE_TYPE_RARE, ORE_TYPE_PRECIOUS } from '../stores/ores';
+import { useOres, ORE_TYPE_COMMON, ORE_TYPE_UNCOMMON, ORE_TYPE_SPECIAL, ORE_TYPE_RARE, ORE_TYPE_PRECIOUS } from '../stores/ores';
+import { lastUpdated } from '../MarketValues';
 import { useMinerals } from '../stores/minerals';
 import { useOreReprocessor } from "../OreReprocessor";
 import Tooltip from "../components/tooltip";
