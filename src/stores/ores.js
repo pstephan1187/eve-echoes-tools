@@ -9,7 +9,7 @@ export const ORE_TYPE_SPECIAL = "Special";
 export const ORE_TYPE_RARE = "Rare";
 export const ORE_TYPE_PRECIOUS = "Precious";
 
-export const lastUpdated = toUniversalTime(2020, 9, 5, 22, 36);
+export const lastUpdated = toUniversalTime(2020, 9, 9, 23, 58);
 
 export const orgOres = [
   { label: "Veldspar",    type: ORE_TYPE_COMMON,    minSec: '-1.0', maxSec:  '1.0', volume: 0.10, value: marketValues.veldspar.jita },

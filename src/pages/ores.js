@@ -49,6 +49,7 @@ const OreRow = ({ ore, holdSize, userMinerals }) => {
         />
         <span className="hidden lg:inline">isk</span>
       </td>
+      <td className="p-1 text-right hidden lg:table-cell">{modifier * 100}%</td>
       <td className={`p-1 text-right ${betterDeal === 'volume' ? `bg-${colorClass}-400` : ''}`}>{volumeValue.toLocaleString()}<span className="hidden lg:inline">isk</span></td>
       <td className={`p-1 text-right ${betterDeal === 'reprocessed' ? `bg-${colorClass}-400` : ''}`}>
         <div className="relative group cursor-pointer">
@@ -82,6 +83,7 @@ const OreTable = ({ holdSize }) => {
             <th className="text-right hidden lg:table-cell">Found In</th>
             <th className="text-right">Volume</th>
             <th className="text-right">Unit Value</th>
+            <th className="text-right hidden lg:table-cell"><Tooltip tooltip={`Your reprocessing proficiency for this ore based on your skills.`}>Output</Tooltip></th>
             <th className="text-right">
               <Tooltip tooltip={`The approximate value of a haul if your entire ${holdSize}m<sup>3</sup> hold was filled with the given ore.`}>Hold Value</Tooltip>
             </th>
@@ -117,7 +119,7 @@ const Ores = () => {
     <div>
       <h2 className="text-4xl mb-4">Ores</h2>
 
-      <p className="mb-4">The values of the ores are not updated automatically. I update them periodically based on approximate market rates of Jita and/or Alikara and additional nearby ITCs. Due to the daily variance of the market, you can set your own values if you'd like.</p>
+      <p className="mb-4">The values of the ores and minerals are not updated automatically. They are updated about once a day to be based on the market buy rates of Jita, Alikara and additional nearby ITCs. If the market rates are different (or if you need to calculated base on different values, for example, a private contract), you can set your own values if you'd like. You can also set your levels of relevant skills to help calculate reprocessing results.</p>
 
       <p className="mb-4 p-2 bg-gray-300 font-bold">Values last updated {lastUpdated.toLocaleDateString()} {lastUpdated.toLocaleTimeString()}.</p>
 
