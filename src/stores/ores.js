@@ -1,6 +1,6 @@
 // https://github.com/dai-shi/react-hooks-global-state
 import { createGlobalState } from 'react-hooks-global-state';
-import { getStickyState, setStickyState, toUniversalTime } from '../utils';
+import { getStickyState, setStickyState } from '../utils';
 import marketValues from '../MarketValues';
 
 export const ORE_TYPE_COMMON = "Common";
