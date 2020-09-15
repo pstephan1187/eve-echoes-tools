@@ -4,34 +4,34 @@ export const lastUpdated = toUniversalTime(2020, 9, 12, 3, 29);
 
 export default {
   // ores
-  veldspar:     { jita:    4 },
+  veldspar:     { jita:    6 },
   scordite:     { jita:   16 },
-  plagioclase:  { jita:   27 },
+  plagioclase:  { jita:   28 },
 
-  omber:        { jita:   49 },
-  kernite:      { jita:  118 },
-  pyroxeres:    { jita:  311 },
-  dark_ochre:   { jita:  322 },
+  omber:        { jita:   56 },
+  kernite:      { jita:  121 },
+  pyroxeres:    { jita:  320 },
+  dark_ochre:   { jita:  316 },
 
-  gneiss:       { jita:  449 },
-  hemorphite:   { jita:  610 },
-  spodumain:    { jita:  740 },
+  gneiss:       { jita:  462 },
+  hemorphite:   { jita:  656 },
+  spodumain:    { jita:  762 },
 
-  hedbergite:   { jita:  719 },
-  jaspet:       { jita: 1005 },
-  crokite:      { jita: 1505 },
+  hedbergite:   { jita:  810 },
+  jaspet:       { jita: 1022 },
+  crokite:      { jita: 1552 },
 
-  arkonor:      { jita: 1705 },
-  bistot:       { jita: 1607 },
-  mercoxit:     { jita: 1057 },
+  arkonor:      { jita: 1810 },
+  bistot:       { jita: 1753 },
+  mercoxit:     { jita: 1151 },
 
   // minerals
-  tritanium:    { jita:    2 },
-  pyerite:      { jita:   28 },
-  mexallon:     { jita:   41 },
-  isogen:       { jita:  150 },
-  nocxium:      { jita: 1420 },
-  zydrine:      { jita: 1501 },
-  megacyte:     { jita: 6000 },
-  morphite:     { jita: 5502 },
+  tritanium:    { jita:    3 },
+  pyerite:      { jita:   26 },
+  mexallon:     { jita:   47 },
+  isogen:       { jita:  162 },
+  nocxium:      { jita: 1450 },
+  zydrine:      { jita: 1350 },
+  megacyte:     { jita: 5002 },
+  morphite:     { jita: 6505 },
 };
