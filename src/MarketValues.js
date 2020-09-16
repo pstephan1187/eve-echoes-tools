@@ -1,6 +1,6 @@
 import { toUniversalTime } from './utils';
 
-export const lastUpdated = toUniversalTime(2020, 9, 12, 3, 29);
+export const lastUpdated = toUniversalTime(2020, 9, 16, 8, 29);
 
 export default {
   // ores
