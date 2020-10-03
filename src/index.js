@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './styles/app.css';
 import * as serviceWorker from './serviceWorker';
 import { MarketValues } from './MarketValues';
-import { render } from '@testing-library/react';
 
 function renderApp() {
   import('./App').then(App => {
