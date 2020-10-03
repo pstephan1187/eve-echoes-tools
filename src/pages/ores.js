@@ -120,7 +120,7 @@ const Ores = () => {
     <div>
       <h2 className="text-4xl mb-4">Ores</h2>
 
-      <p className="mb-4">The values of the ores and minerals are not updated automatically. They are updated about once a day to be based on the market buy rates of Jita, Alikara and additional nearby ITCs. If the market rates are different (or if you need to calculated base on different values, for example, a private contract), you can set your own values if you'd like. You can also set your levels of relevant skills to help calculate reprocessing results.</p>
+      <p className="mb-4">The values of the ores and minerals are pulled automatically from <a href="https://eve-echoes-market.com/" target="_blank" rel="noopener noreferrer">https://eve-echoes-market.com/</a>. They are updated about once every 3 hours and are based on the average buy values of the Eve Echoes Universe. If the market rates are different (or if you need to calculated base on different values, for example, a private contract), you can set your own values if you'd like. You can also set the levels of your relevant skills to help calculate reprocessing results.</p>
 
       <p className="mb-4 p-2 bg-gray-300 font-bold">Values last updated {lastUpdated.toLocaleDateString()} {lastUpdated.toLocaleTimeString()}.</p>
 

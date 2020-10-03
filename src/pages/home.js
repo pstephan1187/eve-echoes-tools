@@ -25,7 +25,7 @@ export default function Home() {
 
       <ul className="mb-4 ml-4 list-disc">
         {roadmap.map(entry => (
-          <li>
+          <li key={entry.label}>
             <span className={entry.completedOn ? 'line-through' : ''}>
               <strong>{entry.label}: </strong>
               {entry.description}
